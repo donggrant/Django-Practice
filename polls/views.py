@@ -3,8 +3,9 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from .forms import CommentsForm
 
-from .models import Choice, Question
+from .models import Choice, Question, Comment
 
 
 class IndexView(generic.ListView):
@@ -39,6 +40,26 @@ class ResultsView(generic.DetailView):
         Excludes any questions that aren't published yet.
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
+
+class CommentsView(generic.ListView):
+    template_name = 'polls/comments.html'
+    context_object_name = 'comments_list'
+    def get_queryset(self):
+        return Comment.objects.filter()
+
+class CommentsListView(generic.ListView):
+    template_name = 'polls/comment_list.html'
+    context_object_name = 'comments_list'
+    def get_queryset(self):
+        return Comment.objects.filter()
+
+def showform(request):
+    form = CommentsForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+    context = {'form': form}
+    return render(request, 'polls/comments.html', context)
+
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)

@@ -1,12 +1,15 @@
 from django.contrib import admin
 
-from .models import Choice, Question
+from .models import Choice, Question, Comment
 
 
 class ChoiceInline(admin.TabularInline):
     model = Choice
     extra = 3
 
+class CommentInline(admin.TabularInline):
+    model = Comment
+    extra = 1
 
 class QuestionAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -18,4 +21,13 @@ class QuestionAdmin(admin.ModelAdmin):
     list_filter = ['pub_date']
     search_fields = ['question_text']
 
+class CommentAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None,               {'fields': ['name', 'comment_body']}),
+    ]
+    # inlines = [CommentInline]
+    list_display = ('name', 'comment_body')
+    search_fields = ['comment_body']
+
 admin.site.register(Question, QuestionAdmin)
+admin.site.register(Comment, CommentAdmin)

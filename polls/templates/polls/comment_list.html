@@ -1,0 +1,16 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+
+<h1>Comment List</h1>
+
+{% if comments_list %}
+	{% for comment in comments_list %}
+		<p style="font-weight: bold;">{{ comment.name}}</p>
+    	<p>{{ comment.comment_body }}</p>
+		<br>
+	{% endfor %}
+{% else %}
+    <p>No comments are available.</p>
+{% endif %}
+
