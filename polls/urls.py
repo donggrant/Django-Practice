@@ -11,5 +11,5 @@ urlpatterns = [
     path('comments/', views.CommentsView.as_view(), name='comments'),
     path('comments/list/', views.CommentsListView.as_view(), name='comment list'),
     path('comments/showform/list/', views.CommentsListView.as_view(), name='comment list'),
-    path('comments/showform/', views.showform, name = "show form"),
+    path('comments/showform/', views.showform, name = "showform"),
 ]
